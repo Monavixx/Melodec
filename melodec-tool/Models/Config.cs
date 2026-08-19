@@ -1,8 +1,13 @@
+using System.Text.Json.Serialization;
+
 namespace melodec_tool.Models;
 
 public class Config
 {
-    public string MusicPath { get; set; }
-    public Track[] Tracks { get; set; }
-    public Playlist[] Playlists { get; set; }
+    [JsonPropertyName("music_path")]
+    public string MusicPath { get; set; } = null!;
+    [JsonPropertyName("tracks")]
+    public Track[] Tracks { get; set; } = [];
+    [JsonPropertyName("playlists")]
+    public Playlist[] Playlists { get; set; } = [];
 }
