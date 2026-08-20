@@ -3,10 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nuget-packageslock2nix = {
-      url = "github:mdarocha/nuget-packageslock2nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # nuget-packageslock2nix = {
+    #   url = "github:mdarocha/nuget-packageslock2nix";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
   };
 
   outputs =

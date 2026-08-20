@@ -16,30 +16,9 @@
         "type": "github"
       }
     },
-    "nuget-packageslock2nix": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1786760098,
-        "narHash": "sha256-TA8PwOyRKwiTFTR400+F0EUx9IC4Ii0+N1Ac67fheVU=",
-        "owner": "mdarocha",
-        "repo": "nuget-packageslock2nix",
-        "rev": "16cd9b18725ac1c46aa008d00b18532175ee6082",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mdarocha",
-        "repo": "nuget-packageslock2nix",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
-        "nixpkgs": "nixpkgs",
-        "nuget-packageslock2nix": "nuget-packageslock2nix"
+        "nixpkgs": "nixpkgs"
       }
     }
   },
