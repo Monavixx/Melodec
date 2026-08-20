@@ -16,7 +16,7 @@ public class Synchronizer(Config config)
             .ToArray();
         var playlists = Directory.GetDirectories(config.MusicPath);
         var playlistsToDownload = config.Playlists
-            .Where(playlist => !playlists.Any(p => Path.GetDirectoryName(p) == playlist.EvaluateDirectoryName()))
+            .Where(playlist => !playlists.Any(p => Path.GetFileName(Path.TrimEndingDirectorySeparator(p)) == playlist.EvaluateDirectoryName()))
             .ToArray();
         var downloader = new Downloader(config);
 
@@ -30,7 +30,8 @@ public class Synchronizer(Config config)
             .Where(f => !config.Tracks.Any(track => track.EvaluateFilename() == Path.GetFileNameWithoutExtension(f)))
             .ToArray();
         var directoriesToRemove = Directory.EnumerateDirectories(config.MusicPath)
-            .Where(d => !config.Playlists.Any(playlist => playlist.EvaluateDirectoryName() == Path.GetDirectoryName(d)))
+            .Where(d => !config.Playlists.Any(playlist => playlist.EvaluateDirectoryName() ==
+                         Path.GetFileName(Path.TrimEndingDirectorySeparator(d))))
             .ToArray();
 
         bool allowed = true;
