@@ -15,8 +15,6 @@ public class Commands
     {
         if (string.IsNullOrWhiteSpace(config))
             config = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "melodec", "config.json");
-        Console.WriteLine(Environment.GetEnvironmentVariable("HOME"));
-        Console.WriteLine(Environment.GetEnvironmentVariable("XDG_CONFIG_HOME"));
         if (!File.Exists(config)) Environment.FailFast($"File '{config}' does not exist");
         Config? conf = JsonSerializer.Deserialize(await File.ReadAllTextAsync(config), ConfigSerializerContext.Default.Config);
         if (conf is null) Environment.FailFast($"Cannot parse the config file: {config}");
