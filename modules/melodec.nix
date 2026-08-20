@@ -19,6 +19,10 @@ in
       type = lib.types.path; # toString config.musicPath
       default = "${config.home.homeDirectory}/Music";
     };
+    keepUndeclared = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+    };
     tracks = lib.mkOption {
       type = lib.types.listOf (
         lib.types.submodule {
@@ -94,6 +98,7 @@ in
           };
         configJson = {
           music_path = toString cfg.musicPath;
+          keep_undeclared = cfg.keepUndeclared;
           tracks = map trackToJson cfg.tracks;
           playlists = map playlistToJson cfg.playlists;
         };
