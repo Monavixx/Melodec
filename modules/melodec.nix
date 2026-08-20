@@ -40,9 +40,9 @@ in
               description = "Output filename without extension";
             };
           };
-          default = [ ];
         }
       );
+      default = [ ];
     };
     playlists = lib.mkOption {
       type = lib.types.listOf (
@@ -67,6 +67,7 @@ in
           };
         }
       );
+      default = [ ];
     };
   };
   config = lib.mkIf cfg.enable {
