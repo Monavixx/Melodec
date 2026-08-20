@@ -12,7 +12,7 @@ pkgs.buildDotnetModule rec {
 
   # Point to your local placeholder file
   nugetDeps = inputs.nuget-packageslock2nix.lib {
-    system = "x84_64-linux";
+    system = "x86_64-linux";
     name = pname;
     lockfiles = [ ../melodec-tool/packages.lock.json ];
   };

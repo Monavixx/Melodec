@@ -45,26 +45,28 @@ in
       );
     };
     playlists = lib.mkOption {
-      type = lib.types.listOf lib.types.submodule {
-        options = {
-          url = lib.mkOption {
-            type = lib.types.str;
+      type = lib.types.listOf (
+        lib.types.submodule {
+          options = {
+            url = lib.mkOption {
+              type = lib.types.str;
+            };
+            author = lib.mkOption {
+              type = lib.types.nullOr lib.types.str;
+              default = null;
+            };
+            title = lib.mkOption {
+              type = lib.types.nullOr lib.types.str;
+              default = null;
+            };
+            directoryName = lib.mkOption {
+              type = lib.types.nullOr lib.types.str;
+              default = null;
+              description = "Playlist directory name";
+            };
           };
-          author = lib.mkOption {
-            type = lib.types.nullOr lib.types.str;
-            default = null;
-          };
-          title = lib.mkOption {
-            type = lib.types.nullOr lib.types.str;
-            default = null;
-          };
-          directoryName = lib.mkOption {
-            type = lib.types.nullOr lib.types.str;
-            default = null;
-            description = "Playlist directory name";
-          };
-        };
-      };
+        }
+      );
     };
   };
   config = lib.mkIf cfg.enable {
