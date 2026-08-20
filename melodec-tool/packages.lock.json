@@ -20,6 +20,7 @@
         "resolved": "10.0.10",
         "contentHash": "MIOw8/F5lXjmhmW15JV9TP9nMpaIiq/TvPtqUEjH3O9Q0RRIInuW5QIS7zllm4q/pxadRbr8nEoBf4hqVPoBYg=="
       }
-    }
+    },
+    "net10.0/linux-x64": {}
   }
 }

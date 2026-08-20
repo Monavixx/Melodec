@@ -13,7 +13,7 @@
       let
         pkgs = import nixpkgs { inherit system; };
 
-        dotnet = pkgs.dotnetCorePackages.dotnet_10.sdk;
+        dotnet = pkgs.dotnetCorePackages.sdk_10_0;
 
         run = pkgs.writeShellScriptBin "run" ''
           ./run.sh
