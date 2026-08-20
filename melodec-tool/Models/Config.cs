@@ -6,6 +6,8 @@ public class Config
 {
     [JsonPropertyName("music_path")]
     public string MusicPath { get; set; } = null!;
+    [JsonPropertyName("keepUndeclared")]
+    public bool KeepUndeclared { get; set; } = true;
     [JsonPropertyName("tracks")]
     public Track[] Tracks { get; set; } = [];
     [JsonPropertyName("playlists")]

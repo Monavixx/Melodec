@@ -21,4 +21,8 @@ pkgs.buildDotnetModule rec {
   dotnetFlags = [
     "-p:StripSymbols=false"
   ];
+  runtimeDeps = [
+    pkgs.ffmpeg
+    pkgs.yt-dlp
+  ];
 }
