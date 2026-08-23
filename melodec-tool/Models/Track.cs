@@ -12,6 +12,8 @@ public class Track
     public string? Author { get; set; }
     [JsonPropertyName("title")]
     public string? Title { get; set; }
+    [JsonPropertyName("album")]
+    public string? Album { get; set; }
 
     [JsonIgnore]
     private string? _cachedName = null;

@@ -7,15 +7,23 @@ public class Downloader(Config config)
 {
     public async Task DownloadAsync(Track track)
     {
+        string directory = config.MusicPath;
+        if (!string.IsNullOrWhiteSpace(track.Album))
+            directory = Path.Combine(directory, $"{track.Author} - {track.Album}");
         var processStartInfo = new ProcessStartInfo
         {
             FileName = "yt-dlp",
-            Arguments = $"--cookies-from-browser chrome -x --audio-format mp3 -P \"{config.MusicPath}\" -o \"{track.EvaluateFilename()}.%(ext)s\" \"{track.Url}\"",
+            Arguments = $"--cookies-from-browser chrome " +
+                "--no-progress " +
+                $"-N 6 -x --audio-format mp3 " +
+                $"-P \"{directory}\" -o \"{track.EvaluateFilename()}.%(ext)s\" " +
+                $"--postprocessor-args \"ExtractAudio:-metadata title='{track.Title}' -metadata artist='{track.Author}' -metadata album='{track.Album}'\" " +
+                $"\"{track.Url}\"",
             UseShellExecute = false,
             CreateNoWindow = true,
-            RedirectStandardError = true,
-            RedirectStandardInput = true,
-            RedirectStandardOutput = true
+            // RedirectStandardError = false,
+            // RedirectStandardInput = true,
+            // RedirectStandardOutput = true
         };
         using var process = new Process { StartInfo = processStartInfo };
 
@@ -25,6 +33,7 @@ public class Downloader(Config config)
             await process.WaitForExitAsync();
             if (process.ExitCode != 0)
                 Console.Error.WriteLine($"yt-dlp returned code {process.ExitCode} while downloading '{track.EvaluateFilename()}' [{track.Url}]");
+            Console.WriteLine($"'{track.EvaluateFilename()}' has been downloaded");
         }
         catch (Exception ex)
         {
@@ -38,10 +47,10 @@ public class Downloader(Config config)
         var processStartInfo = new ProcessStartInfo
         {
             FileName = "yt-dlp",
-            Arguments = $"-N 6 --cookies-from-browser chrome -x --audio-format mp3 -P \"{playlistDirectory}\" -o \"%(playlist_index)s - %(artist,uploader)s - %(track,title)s.%(ext)s\" \"{playlist.Url}\"",
+            Arguments = $"-N 6 --no-progress --cookies-from-browser chrome -x --audio-format mp3 -P \"{playlistDirectory}\" -o \"%(playlist_autonumber)s - {playlist.Author} - %(track,title)s.%(ext)s\" \"{playlist.Url}\"",
             UseShellExecute = false,
             CreateNoWindow = true,
-            // RedirectStandardError = true,
+            // RedirectStandardError = false,
             // RedirectStandardInput = true,
             // RedirectStandardOutput = true
         };
@@ -53,6 +62,7 @@ public class Downloader(Config config)
             await process.WaitForExitAsync();
             if (process.ExitCode != 0)
                 Console.Error.WriteLine($"yt-dlp returned code {process.ExitCode} while downloading '{playlist.EvaluateDirectoryName()}' [{playlist.Url}]");
+            Console.WriteLine($"'{playlist.EvaluateDirectoryName()}' has been downloaded");
         }
         catch (Exception ex)
         {

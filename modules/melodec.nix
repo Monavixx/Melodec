@@ -43,6 +43,10 @@ in
               default = null;
               description = "Output filename without extension";
             };
+            album = lib.mkOption {
+              type = lib.types.nullOr lib.types.str;
+              default = null;
+            };
           };
         }
       );
@@ -86,6 +90,7 @@ in
             author = t.author;
             title = t.title;
             filename = t.filename;
+            album = t.album;
           };
 
         playlistToJson =
