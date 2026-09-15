@@ -30,8 +30,8 @@ public class Synchronizer(Config config)
             .ToArray();
         var downloader = new Downloader(config);
 
-        await Task.WhenAll(downloader.DownloadAsync(tracksToDownload),
-            downloader.DownloadAsync(playlistsToDownload));
+        await downloader.DownloadAsync(tracksToDownload);
+        await downloader.DownloadAsync(playlistsToDownload);
     }
 
     private void RemoveAll(bool dontAsk)

@@ -32,12 +32,34 @@ public class Downloader(Config config)
             process.Start();
             await process.WaitForExitAsync();
             if (process.ExitCode != 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.Error.WriteLine($"yt-dlp returned code {process.ExitCode} while downloading '{track.EvaluateFilename()}' [{track.Url}]");
-            Console.WriteLine($"'{track.EvaluateFilename()}' has been downloaded");
+                Console.ResetColor();
+
+                var filename = Path.Combine(directory, track.EvaluateFilename() + ".mp3");
+                if (File.Exists(filename))
+                {
+                    File.Delete(filename);
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"'{track.EvaluateFilename()}' has been downloaded");
+                Console.ResetColor();
+            }
         }
         catch (Exception ex)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.Error.WriteLine($"Downloading '{track.EvaluateFilename()}' [{track.Url}] failed with message: {ex.Message}");
+            Console.ResetColor();
+            var filename = Path.Combine(directory, track.EvaluateFilename() + ".mp3");
+            if (File.Exists(filename))
+            {
+                File.Delete(filename);
+            }
         }
     }
 
@@ -61,23 +83,48 @@ public class Downloader(Config config)
             process.Start();
             await process.WaitForExitAsync();
             if (process.ExitCode != 0)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.Error.WriteLine($"yt-dlp returned code {process.ExitCode} while downloading '{playlist.EvaluateDirectoryName()}' [{playlist.Url}]");
-            Console.WriteLine($"'{playlist.EvaluateDirectoryName()}' has been downloaded");
+                Console.ResetColor();
+                if (Directory.Exists(playlistDirectory))
+                {
+                    Directory.Delete(playlistDirectory, true);
+                }
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"'{playlist.EvaluateDirectoryName()}' has been downloaded");
+                Console.ResetColor();
+            }
         }
         catch (Exception ex)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.Error.WriteLine($"Downloading '{playlist.EvaluateDirectoryName()}' [{playlist.Url}] failed with message: {ex.Message}");
+            Console.ResetColor();
+            if (Directory.Exists(playlistDirectory))
+            {
+                Directory.Delete(playlistDirectory, true);
+            }
         }
 
     }
 
-    public Task DownloadAsync(Track[] tracks)
+    public async Task DownloadAsync(Track[] tracks)
     {
-        return Task.WhenAll(tracks.Select(DownloadAsync));
+        foreach (var track in tracks)
+        {
+            await DownloadAsync(track);
+        }
     }
 
-    public Task DownloadAsync(Playlist[] playlists)
+    public async Task DownloadAsync(Playlist[] playlists)
     {
-        return Task.WhenAll(playlists.Select(DownloadAsync));
+        foreach (var playlist in playlists)
+        {
+            await DownloadAsync(playlist);
+        }
     }
 }
