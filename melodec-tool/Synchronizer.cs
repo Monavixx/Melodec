@@ -68,6 +68,8 @@ public class Synchronizer(Config config)
     }
     private static void RemoveFilesAndDirectories(string[] files, string[] directories, bool dontAsk)
     {
+        if (files.Length == 0 && directories.Length == 0)
+            return;
         bool allowed = true;
         if (!dontAsk)
         {
