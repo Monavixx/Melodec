@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Melodec.Cli/Melodec.Cli.csproj" />
+    <Project Path="src/Melodec.Core/Melodec.Core.csproj" />
+    <Project Path="src/Melodec.Infrastructure/Melodec.Infrastructure.csproj" />
+  </Folder>
+</Solution>
