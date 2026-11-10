@@ -8,10 +8,10 @@ pkgs.buildDotnetModule rec {
   pname = "Melodec";
   version = "1.0.0";
 
-  src = ../melodec-tool;
-  projectFile = "../melodec-tool/melodec-tool.csproj";
+  src = ../src;
+  projectFile = "Melodec.Cli/Melodec.Cli.csproj";
 
-  nugetDeps = ../melodec-tool/deps.json;
+  nugetDeps = ../deps.json;
 
   dotnet-sdk = pkgs.dotnetCorePackages.sdk_10_0;
   dotnet-runtime = pkgs.dotnetCorePackages.runtime_10_0;

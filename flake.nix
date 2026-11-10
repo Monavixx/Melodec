@@ -17,7 +17,7 @@
       homeManagerModules = rec {
         melodec =
           { pkgs, ... }@args:
-          import ./modules/melodec.nix (
+          import ./nix/modules/melodec.nix (
             args
             // {
               melodecPackage = self.packages.${pkgs.system}.melodec;
@@ -36,7 +36,7 @@
         run = pkgs.writeShellScriptBin "run" ''
           #!/usr/bin/env bash
           set -euo pipefail
-          dotnet run --project "melodec-tool.csproj"
+          dotnet run --project "src/Melodec.Cli/"
         '';
       in
       {
@@ -67,7 +67,7 @@
           '';
         };
 
-        packages.melodec = pkgs.callPackage ./pkgs/melodec.nix { inherit inputs pkgs; };
+        packages.melodec = pkgs.callPackage ./nix/package.nix { inherit inputs pkgs; };
         packages.default = self.packages.${system}.melodec;
       }
     ))
